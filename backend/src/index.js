@@ -11,24 +11,24 @@ import { app, server } from "./lib/socket.js";
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 
-// Trusted frontend URLs
+// Trusted frontend + backend URLs
 const allowedOrigins = [
-  "https://chatapp-frontend-81gr.onrender.com",
-  "http://localhost:5173" // for local testing if needed
+  "https://chatapp-frontend-81gr.onrender.com", // frontend
+  "https://chatapp-rw0i.onrender.com",          // backend
+  "http://localhost:5173"                       // local dev
 ];
 
-// Middlewares
 app.use(express.json());
 app.use(cookieParser());
 
-// 🔥 CORS for all devices (Mobile + Desktop)
+// 🔥 Fully working CORS config for Mobile + Desktop
 app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        console.log("❌ CORS Blocked Origin:", origin);
+        console.log("❌ CORS Blocked:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
@@ -36,11 +36,9 @@ app.use(
   })
 );
 
-// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-// Start server
 server.listen(PORT, () => {
   console.log("🚀 Server running on PORT: " + PORT);
   connectDB();
