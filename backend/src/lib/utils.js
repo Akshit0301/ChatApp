@@ -7,9 +7,9 @@ export const generateToken = (userId, res) => {
 
   res.cookie("jwt", token, {
     httpOnly: true,
-    secure: true,          // required for cross-site
-    sameSite: "None",      // required for cross-site
-    path: "/",             // make cookie valid for full API
+    secure: true,        // HTTPS required (Render + Vercel are HTTPS)
+    sameSite: "None",    // Required for cross-site cookies
+    path: "/",           // Cookie available for all routes
   });
 
   return token;
