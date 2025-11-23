@@ -19,10 +19,13 @@ app.use(cookieParser());
 // 🔥 Allow API to be used from ANY Device (mobile, laptop, friend)
 app.use(
   cors({
-    origin: true,            // dynamically allows any origin
-    credentials: true,       // required for cookies
+    origin: [
+      "https://chatapp-frontend-81gr.onrender.com" // Replace with your actual Render frontend URL
+    ],
+    credentials: true,
   })
 );
+
 
 // Routes
 app.use("/api/auth", authRoutes);
