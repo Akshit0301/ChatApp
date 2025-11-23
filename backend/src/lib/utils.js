@@ -7,9 +7,10 @@ export const generateToken = (userId, res) => {
 
   res.cookie("jwt", token, {
     httpOnly: true,
-    secure: true,        // HTTPS required (Render + Vercel are HTTPS)
-    sameSite: "None",    // Required for cross-site cookies
-    path: "/",           // Cookie available for all routes
+    secure: true,
+    sameSite: "None",
+    domain: ".onrender.com", 
+    path: "/",
   });
 
   return token;
