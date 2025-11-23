@@ -12,20 +12,16 @@ dotenv.config();
 const PORT = process.env.PORT || 5000;
 
 // Middlewares
-app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({ limit: "10mb", extended: true }));
+app.use(express.json());
 app.use(cookieParser());
 
-// 🔥 Allow API to be used from ANY Device (mobile, laptop, friend)
+// Allow only your frontend domain
 app.use(
   cors({
-    origin: [
-      "https://chatapp-frontend-81gr.onrender.com" // Replace with your actual Render frontend URL
-    ],
+    origin: "https://chatapp-frontend-81gr.onrender.com",
     credentials: true,
   })
 );
-
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -33,6 +29,6 @@ app.use("/api/messages", messageRoutes);
 
 // Start server
 server.listen(PORT, () => {
-  console.log("Server running on PORT: " + PORT);
+  console.log("🚀 Server running on PORT " + PORT);
   connectDB();
 });
