@@ -110,3 +110,15 @@ export const checkAuth = (req,res) =>{
         res.status(500).json({message:"Internal server error"});
     }
 }
+
+// Debug endpoint: returns cookies sent by the client (useful to diagnose mobile cookie issues)
+export const debugCookies = (req, res) => {
+    try {
+        // log to server console to help debugging
+        console.log("[DEBUG] request cookies:", req.cookies);
+        res.status(200).json({ cookies: req.cookies || {} });
+    } catch (error) {
+        console.log("Error in debugCookies", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
