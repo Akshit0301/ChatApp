@@ -1,11 +1,15 @@
+// backend/lib/socket.js
 import { Server } from "socket.io";
 import http from "http";
 import express from "express";
 
-const app = express();
-const server = http.createServer(app);
+export const app = express();
+export const server = http.createServer(app);
 
-const io = new Server(server, {
+// store online users: { userId: socketId }
+const userSocketMap = {};
+
+export const io = new Server(server, {
   cors: {
     origin: "https://chatapp-frontend-81gr.onrender.com",
     credentials: true,
@@ -16,23 +20,21 @@ export function getReceiverSocketId(userId) {
   return userSocketMap[userId];
 }
 
-// used to store online users
-const userSocketMap = {}; // {userId: socketId}
-
 io.on("connection", (socket) => {
-  console.log("A user connected", socket.id);
+  console.log("✅ Socket connected:", socket.id);
 
   const userId = socket.handshake.query.userId;
-  if (userId) userSocketMap[userId] = socket.id;
+  if (userId) {
+    userSocketMap[userId] = socket.id;
+  }
 
-  // io.emit() is used to send events to all the connected clients
   io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
   socket.on("disconnect", () => {
-    console.log("A user disconnected", socket.id);
-    delete userSocketMap[userId];
+    console.log("❌ Socket disconnected:", socket.id);
+    if (userId) {
+      delete userSocketMap[userId];
+    }
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
   });
 });
-
-export { io, app, server };

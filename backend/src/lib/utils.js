@@ -1,3 +1,4 @@
+// backend/lib/utils.js
 import jwt from "jsonwebtoken";
 
 export const generateToken = (userId, res) => {
@@ -5,12 +6,13 @@ export const generateToken = (userId, res) => {
     expiresIn: "7d",
   });
 
+  // ✅ Cookie for Render (HTTPS) and cross-site (frontend on other domain)
   res.cookie("jwt", token, {
     httpOnly: true,
-    secure: true,
-    sameSite: "None",
-    domain: ".onrender.com", 
-    path: "/",
+    secure: true,        // Render uses HTTPS
+    sameSite: "None",    // allow cross-site cookie (frontend <> backend)
+    path: "/",           // send cookie to all routes
+    // ❌ DO NOT set `domain` here; let it default to backend host
   });
 
   return token;

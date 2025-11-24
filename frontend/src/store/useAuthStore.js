@@ -92,11 +92,10 @@ export const useAuthStore = create((set, get) => ({
 
     // 🔥 socket connected to deployed backend
     const socket = io(BASE_URL, {
-      query: {
-        userId: authUser._id,
-      },
-      withCredentials: true,
-    });
+  withCredentials: true,
+  query: { userId: authUser._id },
+});
+
 
     socket.connect();
     set({ socket });
