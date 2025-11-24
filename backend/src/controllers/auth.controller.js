@@ -27,15 +27,16 @@ export const signup = async(req,res)=>{
         })
 
         if(newUser){
-            generateToken(newUser._id,res)
-            await newUser.save();
+            const token = generateToken(newUser._id,res)
+                await newUser.save();
 
-            res.status(201).json({ // res.send --> res.status
-                _id: newUser._id,
-                fullName: newUser.fullName,
-                email: newUser.email,
-                profilePic: newUser.profilePic,
-            })
+                res.status(201).json({ // res.send --> res.status
+                    _id: newUser._id,
+                    fullName: newUser.fullName,
+                    email: newUser.email,
+                    profilePic: newUser.profilePic,
+                    token,
+                })
         }else{
             res.status(400).json({ massage:"Invalid user data" });
         }
@@ -57,12 +58,13 @@ export const login = async (req,res)=>{
         if(!isPasswordCorrect){
             return res.status(400).json({message:"Invalid credentials"});
         }
-        generateToken(user._id,res);
+        const token = generateToken(user._id,res);
         res.status(200).json({
             _id:user._id,
             fullName:user.fullName,
             email:user.email,
             profilePic:user.profilePic,
+            token,
         })
     } catch (error) {
         console.log("error in login controller",error.message);
