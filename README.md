@@ -44,4 +44,8 @@ This project helped me understand **real-world deployment issues**, not just loc
 - Fixed SPA refresh issue (`404 Not Found`) by configuring **rewrite rules** on Render  
 - Managed environment variables securely in production  
 - Understood the difference between frontend and backend deployment behavior  
+<img width="1470" height="800" alt="Screenshot 2026-02-02 at 2 11 22 PM" src="https://github.com/user-attachments/assets/62a7e703-912b-4acb-b467-5759ddd7342c" />
+<img width="1470" height="754" alt="Screenshot 2026-02-02 at 2 11 45 PM" src="https://github.com/user-attachments/assets/afab5ae5-4cf9-4151-8009-f87dc683d5bb" />
+<img width="1470" height="799" alt="Screenshot 2026-02-02 at 2 15 56 PM" src="https://github.com/user-attachments/assets/0df4d0fb-53bf-474b-99f6-e6c14a9a2b3e" />
+
 
